@@ -35,23 +35,44 @@ systemctl enable x-ui
 systemctl restart x-ui
 ```
 
+## 使用docker安装
+
+> 此 docker 教程与 docker 镜像由[Chasing66](https://github.com/Chasing66)提供
+
+1. 安装docker
+```shell
+curl -fsSL https://get.docker.com | sh
+```
+2. 安装x-ui
+```shell
+mkdir x-ui && cd x-ui
+docker run -itd --network=host \
+    -v $PWD/db/:/etc/x-ui/ \
+    -v $PWD/cert/:/root/cert/ \
+    --name x-ui --restart=unless-stopped \
+    enwaiax/x-ui:latest
+```
+>Build 自己的镜像
+```shell
+docker build -t x-ui .
+```
+
 ## 建议系统
 - CentOS 7+
 - Ubuntu 16+
 - Debian 8+
 
 # 常见问题
-## 与 v2-ui 关系
-x-ui 相当于 v2-ui 的加强版，未来会加入更多功能，待 x-ui 功能稳定后，v2-ui 将不再提供更新
-
-x-ui 可与 v2-ui 并存，数据不互通，不影响对方的运行
 
 ## 从 v2-ui 迁移
 首先在安装了 v2-ui 的服务器上安装最新版 x-ui，然后使用以下命令进行迁移，将迁移本机 v2-ui 的`所有 inbound 账号数据`至 x-ui，`面板设置和用户名密码不会迁移`
-> 迁移成功后请`关闭 v2-ui` 并且`重启 x-ui`，否则 v2-ui 的 inbound 会与 x-ui 的 inbound 会产生`端口冲突`
+> 迁移成功后请`关闭 v2-ui`并且`重启 x-ui`，否则 v2-ui 的 inbound 会与 x-ui 的 inbound 会产生`端口冲突`
 ```
 x-ui v2-ui
 ```
+
+## issue 关闭
+各种小白问题看得血压很高
 
 ## Stargazers over time
 
